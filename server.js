@@ -1,6 +1,7 @@
 //Imports
 const express = require('express'); 
 const app = express();
+const fetch = require("node-fetch");
 const port = 3000;
 
 // Statics
@@ -13,8 +14,27 @@ app.use('/img', express.static(__dirname + 'public/img'))
 app.set('views', './views')
 app.set('view engine', 'ejs');
 
+//Async function to obtain data
+async function getData() {
+    let jsonData;
+    try {
+        var response = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+        jsonData = await response.json();
+        return jsonData;
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
 app.get("", (req, res) => {
-    res.render('index');
+fetch('https://jsonplaceholder.typicode.com/todos/1')
+        .then(response => response.json())
+        .then(output => {
+            var indexData = output;
+            var userId = indexData.userId;
+            res.render('index', {userId});
+        })
 })
 
 // Listen on port 3000
