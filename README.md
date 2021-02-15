@@ -8,8 +8,14 @@ This is my submission for Tinvio's internship assessment. The minimum features r
 
 * Styled website to be as close to the mock reference as possible
 
-In addition, some "Good To Have" objectives have been implemented 
+In addition, some "Good To Have" objectives have been implemented:
 
 * Mobile responsiveness
 
-* Hosted on website 
+* Hosted on website [https://tinvio-assessment.herokuapp.com/](https://tinvio-assessment.herokuapp.com/)
+
+Improvements that I would like to implement in the future: 
+
+* Enable the switching of users 
+
+* Allow the full display of post body upon clicking a post. 
