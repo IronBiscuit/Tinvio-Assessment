@@ -2,8 +2,20 @@
     margin-top: 5%;
 }
 
-[class*='col-'] {
-    border-color: red;
+.fixedCol {
+    max-height: 700px;
+}
+
+
+body {
+    background-color: #ebe9e8
+}
+
+.custom-gutter > [class*='col-'] {
+    padding-right:10px;
+    padding-left:16px; 
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .container-content {

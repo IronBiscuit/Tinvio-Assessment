@@ -18,42 +18,88 @@ app.set('views', './views')
 app.set('view engine', 'ejs');
 
 //Async function to obtain data
-async function getData() {
-    let jsonData;
-    try {
-        var response = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-        jsonData = await response.json();
-        return jsonData;
-    } catch (e) {
-        console.error(e);
-        return null;
-    }
-}
+function fetchJSON(url) {
+    return fetch(url)
+    .then(response => response.json())
+  }
 
 app.get("", (req, res) => {
-fetch('https://jsonplaceholder.typicode.com/users/1')
+    const userData = fetchJSON('https://jsonplaceholder.typicode.com/users/1');
+    const userPosts = fetchJSON('https://jsonplaceholder.typicode.com/posts?userId=1');
+    Promise.all([userData, userPosts]).then((data) => {
+        var userData = data[0];
+        var postData = data[1];
+        
+        var name = userData.name;
+        var firstName = name.split(' ')[0];
+        var phoneFullString = userData.phone;
+        var website = userData.website;
+        var email = userData.email;
+        var addressStreet = userData.address.street;
+        var addressSuite = userData.address.suite;
+        var addressCity = userData.address.city;
+        var addressZipcodeFullString = userData.address.zipcode;
+        var companyBsFullString = userData.company.bs;
+            
+        var phone = phoneFullString.split(' ')[0];
+        var addressZipcode = addressZipcodeFullString.split('-')[0];
+        var companyBs = companyBsFullString.split(' ');
+        for (var i = 0; i < companyBs.length; i++) {
+            companyBs[i] = companyBs[i].charAt(0).toUpperCase() + companyBs[i].substring(1);
+        }
+
+        for (var i = 0; i < postData.length; i++) {
+            postData[i].title = postData[i].title.charAt(0).toUpperCase() + postData[i].title.substring(1);
+        }
+        
+        res.render('index', {
+            name: name,
+            firstName: firstName,
+            phone: phone,
+            website: website,
+            email: email,
+            addressStreet: addressStreet,
+            addressCity: addressCity,
+            addressSuite: addressSuite,
+            addressZipcode: addressZipcode,
+            companyBs: companyBs,
+            postData: postData
+        })
+    })
+/* fetch('https://jsonplaceholder.typicode.com/users/1')
         .then(response => response.json())
         .then(output => {
             var indexData = output;
             var name = indexData.name;
-            var phone = indexData.phone;
+            var firstName = name.split(' ')[0];
+            var phoneFullString = indexData.phone;
             var website = indexData.website;
             var email = indexData.email;
             var addressStreet = indexData.address.street;
             var addressSuite = indexData.address.suite;
             var addressCity = indexData.address.city;
-            var addressZipcode = indexData.address.zipcode;
+            var addressZipcodeFullString = indexData.address.zipcode;
+            var companyBsFullString = indexData.company.bs;
+            
+            var phone = phoneFullString.split(' ')[0];
+            var addressZipcode = addressZipcodeFullString.split('-')[0];
+            var companyBs = companyBsFullString.split(' ');
+            for (var i = 0; i < companyBs.length; i++) {
+                companyBs[i] = companyBs[i].charAt(0).toUpperCase() + companyBs[i].substring(1);
+            }
             res.render('index', { 
                 name: name,
+                firstName: firstName,
                 phone: phone,
                 website: website,
                 email: email,
                 addressStreet: addressStreet,
                 addressCity: addressCity,
-                addressSuit: addressSuite,
-                addressZipcode: addressZipcode
+                addressSuite: addressSuite,
+                addressZipcode: addressZipcode,
+                companyBs: companyBs
             });
-        })
+        }) */
 })
 
 // Listen on port 3000
