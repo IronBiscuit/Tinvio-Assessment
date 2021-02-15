@@ -8,6 +8,10 @@ This is my submission for Tinvio's internship assessment. The minimum features r
 
 * Styled website to be as close to the mock reference as possible
 
+In order to run the application, you could use one of two ways:
+
+
+
 In addition, some "Good To Have" objectives have been implemented:
 
 * Mobile responsiveness
